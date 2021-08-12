@@ -40,10 +40,11 @@ export default {
       }),
     dev && livereload("dist"), //实时刷新
     // 清除目录
-    clear({
-      targets: ["dist"], // 项目打包编译生成的目录
-      watch: true, // 实时监听文件变化
-    }),
+    build &&
+      clear({
+        targets: ["dist"], // 项目打包编译生成的目录
+        watch: true, // 实时监听文件变化
+      }),
     // 预处理器
     scss(),
     // 支持css文件的加载、css加前缀、css压缩、对scss/less的支持等等
