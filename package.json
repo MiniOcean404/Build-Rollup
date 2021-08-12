@@ -4,12 +4,15 @@
   "description": "rollup打包",
   "main": "./src/main.js",
   "scripts": {
-    "building": "rollup -c -w"
+    "dev": "rollup -c -w --environment NODE_ENV:dev",
+    "build": "rollup -c  --environment NODE_ENV:build"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "rollup": "^2.56.1"
+    "postcss": "^8.3.6",
+    "rollup": "^2.56.1",
+    "rollup-plugin-postcss": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -19,6 +22,7 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-terser": "^7.0.2"
