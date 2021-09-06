@@ -9,6 +9,10 @@ import json from "rollup-plugin-json";
 import livereload from "rollup-plugin-livereload";
 import scss from "rollup-plugin-scss";
 import postcss from "rollup-plugin-postcss";
+import typescript from "rollup-plugin-typescript";
+ 
+// import globals from "rollup-plugin-node-globals";
+// import builtins from "rollup-plugin-node-builtins";
 
 const mode = process.env.NODE_ENV;
 const dev = mode === "dev";
@@ -16,7 +20,7 @@ const build = mode === "build";
 
 export default {
   // 输入
-  input: "./src/main.js",
+  input: "./src/main.ts",
   // 输出
   output: {
     file: "./dist/bundle.js", //输出文件及位置
@@ -27,8 +31,10 @@ export default {
     sourcemap: true,
   },
   plugins: [
-    // 代码压缩，去除注释
-    terser(),
+
+    typescript(),
+    // 预处理器
+    scss(),
     dev &&
       serve({
         open: true, // 运行时自动打开浏览器
@@ -45,13 +51,16 @@ export default {
         targets: ["dist"], // 项目打包编译生成的目录
         watch: true, // 实时监听文件变化
       }),
-    // 预处理器
-    scss(),
+
     // 支持css文件的加载、css加前缀、css压缩、对scss/less的支持等等
-    postcss(),
+    postcss({
+      // modules: true,
+    }),
 
     //合并第三方库,告诉 Rollup 如何查找外部模块
-    resolve(),
+    resolve({
+      // preferBuiltins: false
+    }),
     //解决使用三方库，模块导入导出方式
     commonjs(),
     //解决es6以上代码兼容性问题的babel
@@ -60,6 +69,14 @@ export default {
     }),
     //处理json
     json(),
+    // 代码压缩，去除注释
+    terser(),
+    // typescript({
+    //   rollupCommonJSResolveHack: true,
+    //   clean: true,
+    // }),
+    // globals(),
+    // builtins(),
   ],
   external: [""], //作用：指出应将哪些模块视为外部模块，否则会被打包进最终的代码里
 };
